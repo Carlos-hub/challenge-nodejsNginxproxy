@@ -44,18 +44,14 @@ app.get('/',async (req,res)=>{
         }
     
         // Iterar pelos resultados e imprimir campos individuais
+        const retornaClient = [];
         results.forEach((row) => {
-          console.log('ID:', row.id);
-          console.log('Nome:', row.name);
-          return res.send(`
-          <h1> FULL CYCLE ROCKS!!!<br/>
-          ID ${row.id}<br/>
-          Nome: ${row.name}
-          `)
-          // Adicione mais campos conforme necessário
+          retornaClient.push(row.id, row.name);
         });
-    
-        connection.end(); // Feche a conexão após a consulta
+        return res.json(`
+        <h1> FULL CYCLE ROCKS!!!<br/>
+        ${retornaClient}
+        `)
       });
     //   return res.send("<h1> FULL CYCLE ROCKS!!!")
 });
