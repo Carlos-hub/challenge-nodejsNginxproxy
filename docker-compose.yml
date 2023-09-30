@@ -9,10 +9,8 @@ services:
       networks:
         - nodeginx
       volumes:
-        - ./nodejs:/usr/src/app
+        - ./nodejs/:/app
       tty: true
-      depends_on:
-        - db
 
 
     db:
@@ -21,8 +19,6 @@ services:
       container_name: db
       restart: always
       tty: true
-      volumes:
-        - ./mysql:/var/lib/mysql
       environment:
         - MYSQL_DATABASE=nodedb
         - MYSQL_ROOT_PASSWORD=nodedb
@@ -42,3 +38,5 @@ services:
 networks: 
     nodeginx:
         driver: bridge
+
+  

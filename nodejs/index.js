@@ -13,28 +13,27 @@ const config = {
 const mysql = require('mysql');
 const connection = mysql.createConnection(config);
 
-const verifyExistTable = `SHOW TABLES LIKE 'people`
 
-if(verifyExistTable.length >0){
-    console.log('table ok');
-}else{
-    const createTable = `CREATE TABLE people (
-        id INT NOT NULL AUTO_INCREMENT,
-        name VARCHAR(255) NOT NULL,
-        PRIMARY KEY (id)
-    );`
+const verifyExistTable = `SELECT 1 FROM people LIMIT 1`
+const tableExist =  connection.query(verifyExistTable,async (err, results)=>{
+    console.log(await results);
+    if(results.length >0){
+        console.log('table ok');
+    }else{
+        const createTable = `CREATE TABLE people (
+            id INT NOT NULL AUTO_INCREMENT,
+            name VARCHAR(255) NOT NULL,
+            PRIMARY KEY (id)
+        );`
+        connection.query(createTable);
+}});
     
-    connection.query(createTable);    
-}
-
-
-
-const sql = `INSERT INTO people(name) values('Carlos')`
-connection.query(sql);
-
-
 
 app.get('/',async (req,res)=>{
+
+const sqli = `INSERT INTO people(name) values('Carlos')`
+connection.query(sqli);
+
     const sql = `SELECT * FROM people`
     connection.query(sql, (err, results) => {
         if (err) {
