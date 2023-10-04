@@ -1,10 +1,12 @@
-FROM node:20.5.0
+FROM node:20
 
 WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install
+RUN npm install && \
+    npm install express \
+    npm install mysql
 
 COPY . .
 
@@ -13,5 +15,3 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize
     rm dockerize-linux-amd64-v0.6.1.tar.gz
 
 EXPOSE 3000
-
-CMD ["dockerize", "-wait", "tcp://db:3306", "npm", "start"]
