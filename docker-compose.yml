@@ -6,10 +6,13 @@ services:
         context: ./nodejs
         dockerfile: Dockerfile
       container_name: nodejs
+      working_dir: /app
+      volumes: 
+        - ./nodejs:/app
       networks:
         - nodeginx
       tty: true
-      entrypoint:  dockerize -wait tcp://db:3306 -timeout 20s sh -c "npm start"
+      entrypoint:  dockerize -wait tcp://db:3306 -timeout 20s sh -c "npm install && npm start"
 
 
     db:
